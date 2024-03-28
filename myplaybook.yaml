@@ -1,0 +1,23 @@
+- name: install apache on slaves
+  hosts: all
+  vars_files:
+    - vars.yaml
+  tasks:
+    - name: install apache2 on ubuntu
+      apt:
+        name: "{{ apache_service }}"
+        state: present
+        service: enabled
+      when: ansible_os_family == 'Debian'
+
+    - name: install apache2 on Centos
+      yum:
+        name: httpd
+        state: present
+        service: enabled
+      when: ansible_os_family == 'RedHat'
+
+    - name: Replace content of apache directory
+      copy:
+        content: "{{ apache_content }}"
+        dest: "{{ apache_html_path }}" 
