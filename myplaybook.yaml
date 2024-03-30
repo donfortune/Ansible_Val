@@ -12,7 +12,7 @@
 
     - name: install apache2 on Centos
       yum:
-        name: httpd
+        name: "{{ httpd_service }}"
         state: present
         service: enabled
       when: ansible_os_family == 'RedHat'
